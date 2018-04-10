@@ -1,0 +1,51 @@
+{
+  "name": "react-robust-avatar",
+  "version": "1.0.0",
+  "description": "React component for load user avatar safely.",
+  "main": "./lib/es5/index.js",
+  "files": [
+    "./lib"
+  ],
+  "scripts": {
+    "start": "tsc -w -d",
+    "pre-publish": "npm run compile-es3 && npm run compile-es5 && npm run compile-es6",
+    "compile-es3": "trash './lib/es3' && tsc -t 'ES3' -m 'commonjs' --jsx 'react' --strict --outDir './lib/es3' -d --sourceMap ",
+    "compile-es5": "trash './lib/es5' && tsc -t 'ES5' -m 'commonjs' --jsx 'react' --strict --outDir './lib/es5' -d --sourceMap ",
+    "compile-es6": "trash './lib/es6' && tsc -t 'ES6' -m 'commonjs' --jsx 'react' --strict --outDir './lib/es6' -d --sourceMap ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hifizz",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/classnames": "^2.2.3",
+    "@types/jest": "^22.1.1",
+    "@types/react": "^0.14.57",
+    "@types/react-dom": "^0.14.17",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "jest": "^22.1.4",
+    "trash-cli": "^1.4.0",
+    "ts-jest": "^22.0.2",
+    "typescript": "^2.3.4"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "parcel-bundler": "^1.7.0",
+    "react": "^0.14.9",
+    "react-dom": "^0.14.9"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}
