@@ -4,7 +4,8 @@
   "description": "React component for load user avatar safely.",
   "main": "./lib/es5/index.js",
   "files": [
-    "./lib"
+    "./lib",
+    "./README.md"
   ],
   "scripts": {
     "start": "tsc -w -d",

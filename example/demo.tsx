@@ -8,6 +8,7 @@ ReactDOM.render(
     defaultSrc="http://hifizz.com/content/images/2017/11/WechatIMG4.jpeg"
     size="50px"
     shape="circle"
+    style={{borderRadius: '4px'}}
   />,
   document.getElementById("app")
 );

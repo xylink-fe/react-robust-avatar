@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as classNames from "classnames";
 
-// event can be speard
 export interface AvatarProps {
   size: string | number;
   src: string;
@@ -15,60 +14,90 @@ export interface AvatarProps {
 }
 
 export interface AvatarState {
-  firstTime: boolean;
+  reload: boolean;
 }
 
 export class Avatar extends React.Component<AvatarProps, AvatarState> {
   static defaultProps = {
-    shape: 'circle'
-  }
+    shape: "circle"
+  };
 
   constructor(props: AvatarProps) {
     super(props);
     this.state = {
-      firstTime: true
+      reload: true // 防止加载失败后，默认头像也加载失败，导致循环加载默认图
     };
   }
 
   onError = (): void => {
-    if (this.state.firstTime) {
-      this.setState(
-        (prevState: AvatarState, props: AvatarProps): AvatarState => {
-          return {
-            firstTime: false
-          };
-        }
-      );
+    if (this.state.reload) {
+      this.setState({
+        reload: false
+      });
     }
   };
 
-  onLoad = () => {
-    console.log('Load image successfully!')
-  };
+  onLoad = () => {};
 
   render() {
-    let { src, size, defaultSrc, alt, title, shape } = this.props;
-    let {firstTime} = this.state;
-    let avatarClass = classNames({ avatar: true });
-    let imgStyle = {
-      width: size,
-      height: size,
-      borderRadius: shape === 'circle' ? '50%' : '0'
-    };
-    let imgSrc = firstTime ? src : defaultSrc;
+    let {
+      src,
+      size,
+      defaultSrc,
+      alt,
+      title,
+      shape,
+      style,
+      className
+    } = this.props;
+    let { reload } = this.state;
+    let resultStyle = assign(
+      {
+        width: size,
+        height: size,
+        borderRadius: shape === "circle" ? "50%" : "0"
+      },
+      style
+    );
+
+    let imgSrc = reload ? src : defaultSrc;
 
     return (
-      <div>
-        <img
-          src={imgSrc}
-          alt={alt}
-          title={title}
-          className={avatarClass}
-          style={imgStyle}
-          onError={this.onError}
-          onLoad={this.onLoad}
-        />
-      </div>
+      <img
+        src={imgSrc}
+        alt={alt}
+        title={title}
+        className={className}
+        style={resultStyle}
+        onError={this.onError}
+        onLoad={this.onLoad}
+      />
     );
   }
+}
+
+function assign(target: any, varArgs: any) {
+  // .length of function is 2
+  "use strict";
+  if (target == null) {
+    // TypeError if undefined or null
+    throw new TypeError("Cannot convert undefined or null to object");
+  }
+
+  var to = Object(target);
+
+  for (var index = 1; index < arguments.length; index++) {
+    var nextSource = arguments[index];
+
+    if (nextSource != null) {
+      // Skip over if undefined or null
+      for (var nextKey in nextSource) {
+        // Avoid bugs when hasOwnProperty is shadowed
+        if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+          to[nextKey] = nextSource[nextKey];
+        }
+      }
+    }
+  }
+  return to;
 }

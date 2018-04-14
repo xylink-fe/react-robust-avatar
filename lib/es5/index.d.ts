@@ -12,7 +12,7 @@ export interface AvatarProps {
     onClick?: Function;
 }
 export interface AvatarState {
-    firstTime: boolean;
+    reload: boolean;
 }
 export declare class Avatar extends React.Component<AvatarProps, AvatarState> {
     static defaultProps: {
